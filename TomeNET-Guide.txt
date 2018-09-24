@@ -1,14 +1,15 @@
 .=========================+==--.
 |      TomeNET Guide      |
 +=========================+-
-| Latest update: 2. June 2018 - written by C. Blue (c_blue@gmx.net)
+| Latest update: 22. September 2018 - written by C. Blue (c_blue@gmx.net)
 | for TomeNET version v4.7.1a - official websites are:
 | http://www.tomenet.eu/ (official main site, formerly www.tomenet.net)
 | http://muuttuja.org/tomenet/ (Mikael's TomeNET site)
+| Runes & Runemastery sections by Kurzel (kurzel.tomenet@gmail.com)
 |
-| IF YOU GOT THIS GUIDE WITH THE PROGRAM DOWNLOAD, IE IN A CLIENT ZIP FILE,
-| THEN FIRST THING YOU SHOULD DO NOW IS GO TO www.tomenet.eu AND DOWNLOAD THE
-| LATEST COPY OF THIS GUIDE TO MAKE SURE YOU AREN'T LOOKING AT OUTDATED INFO!
+| You should always keep this guide up to date: Either go to www.tomenet.eu to
+| obtain the latest copy or simply run the TomeNET-Updater.exe in your TomeNET
+| installation folder (desktop shortcut should also be available) to update it.
 |
 | If your text editor cannot display the guide properly (needs fixed-width font
 | like for example Courier), simply open it in any web browser instead.
@@ -919,6 +920,9 @@ CTRL+E      Delete word before the cursor.
 CTRL+A/S    Move cursor back/forward by one character.
 CTRL+D      Delete character under the cursor.
 
+CTRL+C      Search history of chat messages you typed. Press CTRL+C again for
+            next match. Press ENTER to choose or ESC to cancel.
+
 
 (0.2b) Slash commands
 ---------------------
@@ -1035,7 +1039,8 @@ They all start with a slash '/' hence they're called slash commands:
             scale mails, leaving them intact.
 
 /dis a      DESTROYS items like '/dis', and additionally destroys all items
-            that have no inscription at all.
+            that have no inscription at all or just a price discount tag
+            (discount tags don't count as real inscriptions).
             Also see /tag and /untag.
 
 /dis b      DESTROYS items like '/dis a' does, but skips identified ego items,
@@ -1627,18 +1632,19 @@ resistances or abilities. A shortcut is the...
 Item power inscription (added in 4.7.1):
     @@         Will automatically inscribe an item with codes representing its
                special powers. Only works with *identified* items.
-               The @@ part must always be in the beginning of the inscription,
-               after it you can append more things if you like to.
+               Can also be used on custom spell books.
     @@@        Redux version. Avoids stats, extra might since it's obvious,
                infra-vision, searching, and mods that are obvious because they
                can only come from base item type (disarm, digging, luck),
                light radius, slays and brands except for kill-flags, and
                partial ESPs.
+               Can also be used on custom spell books, will shorten the names.
 
     Resulting inscription details:
     _S                sustain stat (S/I/W/D/C/H, where H is cHarisma)
     +S                increase stat
     ^S                increase and sustain stat
+    -S                decrease stat
     Xm/Xs             extra might/extra shots (ranged weapons)
     HP/MP             +hit points/+mana
     Spd/Att/Crt/Stl   +speed/+extra attacks/+critical hits/+stealth
@@ -1659,8 +1665,8 @@ Item power inscription (added in 4.7.1):
     Refl/Inv/AM/Bless reflection/invisibility/anti-magic shell/Blessed
     ID                auto-ID
     Climb/Swim/Wraith climbing/swimming/wraithform
-    AE/AC/AF          aura of fire/cold/electricity
-    BE/BC/BF/BA/BP    brand of fire/cold/electricity/acid/poison
+    AE/C/F            aura of fire/cold/electricity
+    BE/C/F/A/P        brand of fire/cold/electricity/acid/poison
     +oTPaWUDEvil      slay orc/troll/giant/animal/undead/demon/dragon/evil
     *WUD              kill undead/demon/dragon
     ~oTPaWUEvil       ESP orc/troll/giant/animal/undead/demon/dragon/evil
@@ -1761,8 +1767,8 @@ inscription to overwrite existing inscriptions in any case (usually it only
 overwrites trivial inscriptions such as price discount tags).
 
 Auto-inscription files can be saved and will be loaded automatically in the
-same manner as macro files, if the filename matches your race, class, account
-or character name.
+same manner as macro files, if the filename matches your race, trait, class or
+character name (compare (3.6), 'Loading macros automatically').
 If multiple matching files are found, the game will attempt to merge them
 accordingly.
 
@@ -2544,6 +2550,9 @@ Enter the 'tomenet/' folder and type:
         ./tomenet
 to start the game.
 
+If you get a font-related error ("Font not found: 9x15") please see PROBLEM 55
+in chapter Troubleshooting (8.8).
+
 
 Linux (compiling from source):
 ------------------------------
@@ -2584,6 +2593,9 @@ IMPORTANT NOW: You need to move the binary 'tomenet' that was just created one
 Go up one level into your 'tomenet/' folder. There type:
         ./tomenet
 to start the game.
+
+If you get a font-related error ("Font not found: 9x15") please see PROBLEM 55
+in chapter Troubleshooting (8.8).
 
 
 Configure TomeNET on Linux by editing config files or setting environment vars:
@@ -4296,13 +4308,14 @@ to have them loaded automatically.
 Note: If you're using a Linux version, remember that the file system is
 case-sensitive, so don't save your macros to 'kinkan.prf' since your character
 actually starts with a capital 'K' or the file won't be loaded. Make sure
-the filename and character-, class- or race-name are exactly the same
-('Dwarf.prf', 'High-Elf.prf', 'Ranger.prf'..).
+the filename and character-, class-, race- or trait-name are exactly the same
+('Dwarf.prf', 'High-Elf.prf', 'Ranger.prf', 'Enlightened.prf'..).
 Another option is to save the macros to a file named 'global.prf' (all lower
 case letters). This is a special macro file that will always be loaded, for
 all characters of yours.
-You can also save macros to <racename>.prf or to <classname>.prf, like
-Warrior.prf to have them being auto-loaded on all characters of that class.
+You can also save macros to <racename>.prf, to <classname>.prf and to
+<traitname>.prf, like Warrior.prf to have them being auto-loaded on all
+characters of that class/race/trait.
 Priority order (latter one overrides prior one):
 
 These files are meant to store client options and configuration,
@@ -4321,10 +4334,11 @@ These files can be used for saving your macros to without problems:
 'global.prf' (is always loaded for any character the player logs in with.
                be sure to use all lower-case letters, not 'Global.prf'!)
 <race>.prf (for the specific race)
+<trait>.prf (for the specific trait, particularly useful for Maiar)
 <class>.prf (for the specific class)
 <character name>.prf (for the specific character the player logged in with)
 
-It is recommended to use only race/class/character preference files
+It is recommended to use only race/trait/class/character preference files
 for storing your macros.
 
 
@@ -5675,6 +5689,7 @@ staircase colours (also visible on the world map):
 -NO_DEATH. The Training Tower in Bree has this flag. Players who die inside a
  no-death dungeon won't turn into a ghost if they 'die' but just be teleported
  back to town! They still lose about 20% experience (and gold) though.
+ They will not lose their winner (King/Queen/Emperor/Empress) state though.
  No-death dungeons/towers are marked by a green < or > symbol.
 
 -Unescapable dungeons. There is usually only one such dungeon and that is the
@@ -5993,9 +6008,38 @@ The 1..9 are standard shops, namely..
                         a bank account to deposit your money in so you won't
                         lose it accidentally on a dungeon trip,
                         and a mail service that allows you to send money or an
-                        item to other players.
+                        item to other players for a fee, and optionally impose
+                        a price on an item you send that the receipient must
+                        pay you in return for accepting it.
                         Several towns have a subsidiary, you can globally
                         access your bank account and mail from any of those.
+
+                        Explanation of the mail system's details:
+
+                        You can choose to send money or an item to another
+                        character. All usual trading restrictions apply.
+                        It costs a small fee depending on the value sent,
+                        which can also be imposed on the receipient (COD,
+                        collect on delivery) if the sender wishes so.
+                        Further, when sending an item, you may optionally force
+                        the receipient to pay a price in order to receive it
+                        which will be sent back to you by the Merchants Guild,
+                        making it useful for asynchronous item trading too.
+
+                        Mail will arrive after about a minute real-time and
+                        then allow for a one week real-time span to get picked
+                        up by the receipient. If it expires it will be sent
+                        back and again the original sender has one week to pick
+                        it up. If this time frame expires too the mail will be
+                        erased and therefore the money or item will be lost
+                        irrevocably.
+                        If the receipient dies before he can pick up the mail
+                        then the mail will be returned to the sender too who
+                        then again has one week to pick it up until it expires
+                        and gets deleted irrevocably.
+                        If the mail gets returned to the sender for any reason
+                        but the sender character no longer exists, the mail
+                        will also get erased irrevocably.
         Rune Repository
                         Sells and buys runes used by Runemasters.
         Casino          Minas Anor has a casino. Go and try your luck!
@@ -6410,7 +6454,7 @@ The Illusory Castle            |  1750..2600/ 35..52   |       10
 The Sacred Land of Mountains   |  2000..2250/ 40..45   |       20
 Erebor                         |  2500..3050/ 50..61   |       35
 Dol Guldur                     |  2850..3550/ 57..71   |       28
-Mount Doom                     |  4250..5000/ 85..99   |       38
+Mount Doom                     |  4250..4950/ 85..99   |       38
 The Cloud Planes               |  6500..7450/130..149  |       40 (****)
 Nether Realm                   |  8300..9800/166..196  |       40 (*****)
 
@@ -7008,9 +7052,9 @@ dungeon on level -100ft (2nd dungeon level).
 (4.10) Houses
 -------------
 There are two types of houses, private houses and (very few) public houses.
-Public houses have walls of slate colour, while private houses have white
-walls. Public houses always have a light brown house door and can be entered
-by anyone, they cannot be bought.
+Public houses have walls of slate colour or in the case of wood cabins brown
+walls, while private houses have white walls. Public houses always have a light
+brown house door and can be entered by anyone, they cannot be bought.
 
 Private houses can actually be bought by a player, and their access can be
 configured for example to allow everyone in your party to enter it.
@@ -7040,8 +7084,7 @@ ie which players may access it:
  to party access for your party.
 
 -a violet door indicates that you may access this house because you're in the
- same guild as the owner, ie the house is set to 'guild access'.
- (Note: Guild access is currently disabled.)
+ same guild as the house is owned by, ie the house is actually your guild hall.
 
 -a yellow door indicates that you will have access to this house, as soon as
  your level matches the level restriction set by its owner.
@@ -7067,10 +7110,6 @@ If you forgot which houses you own, type ~9 or use the /houses command to see a
 list of your houses.
 The house owner can always access his house and cannot lock himself out by
 setting restrictions. The door will always be displayed light green to him.
-
-Note: The colour of house walls and doors are affected by day/night, so in the
-night the colours will not be accurate but darker, until you come close enough
-that the door is within your lamp's light radius.
 
 Special gimmick: You can press 'h' or use the /paint command to paint your
 house, see the "/paint" command in (0.2b) for more information.
@@ -7297,11 +7336,15 @@ always has a chance to stun you, even if your AC is very high.
 (4.11a) Drain effects
 ---------------------
 Apart from the effects listed above which are indicated in the status bar at
-the bottom of the main window, there are three 'drain' effects that can occur.
-These can be caused by items, monsters or terrain, and are:
+the bottom of the main window, there are three 'drain' effects that can be
+caused by items and three other 'drain' effects that can be caused by monsters,
+traps or elemental attacks you suffer (possibly from terrain too).
 
+
+Drain effects caused by items:
+------------------------------
 Experience drain ('Drains your life force')
-    Having 'Hold Life' does not protect against this.
+    Having 'Hold Life' does not protect against this..
     If you equip multiple items that drain experience, the total drain will
     diminish with each further item though instead of adding up, so for example
     using two rings of power will be less severe than than one might expect.
@@ -7313,7 +7356,13 @@ Experience drain ('Drains your life force')
     Experience drain is on hold while you are in town areas, this includes
     dungeon towns.
     All the rings of power that are dropped by Nazgul drain experience (and
-    turn you invisible).
+    turn you invisible). Note that having multiple items that drain experience
+    will not result in a linear increase of the drained amount. Instead, each
+    further draining item will drain less, making it more feasible for exampe
+    to equip two rings of power.
+    The higher the experience gain ratio of a character is (depending on its
+    race/class combination) the worse it will be hit by experience drain from
+    items, with Maiar being the class that has the most trouble compensating.
 
 Mana drain ('Drains your magic')
     Drains your mana pool over time while you have this item equipped.
@@ -7321,7 +7370,8 @@ Mana drain ('Drains your magic')
 Hit point drain ('Drains your hit points')
     Drains your hit points down to zero, then stops. This means that this
     effect won't kill you, but can make it extremely risky to go AFK in an
-    unsafe place. Well, going AFK in an unsafe place can kill you anyway.
+    unsafe place, as any further damage you suffer from whatever reason would
+    finish you off. Well, going AFK in an unsafe place can kill you anyway.
 
     HP drain stacks and is given by:
      -Items that just drain your HP
@@ -7341,6 +7391,111 @@ Hit point drain ('Drains your hit points')
     which all stack too.
 
 Also see (5.17) for how these drain effects stack or may be cancelled out.
+
+
+Drain effects caused by monsters, traps or elemental attacks including terrain:
+-------------------------------------------------------------------------------
+Experience drain from monster attacks, traps or elemental damage you suffer
+    'You feel your life draining away!' - the normal message.
+    'You feel your life slipping away!' - you suffer less drain, happens if you
+                                          acquired the 'Hold life' power, which
+                                          is the specific resistance meant to
+                                          counter experience drain.
+    'You keep hold of your life force!' - you suffer no drain! Happens if you
+                                          have 'Hold life' and get lucky.
+    'You are unaffected!'               - you are completely unaffected by
+                                          experience drain ('Keep life').
+                                          To acquire this ability you need to
+                                          be either level 99 or have Necromancy
+                                          skill trained to 50.000 (maxed out).
+    Some of your experience points will be drained. If this happens a lot, you
+    might even lose one or more character levels! (You retain all your skill
+    points though.)
+    When your experience is drained this way, it will be displayed in yellow
+    colour instead of light green on your character sheet (SHIFT+C) and in your
+    'XP' bar on the main screen.
+    The game remembers your original amount of experience though and you can
+    restore it by purchasing a potion of 'Restore Life Levels' from the temple
+    in town or by corresponding restoration magic of various sorts.
+    It is recommended to restore your experience ASAP because any further gain
+    of experience points while in drained state will only count towards your
+    original maximum by 10% of its real value, resulting in large amounts of XP
+    being wasted.
+
+Experience drain from Black Breath
+    This is especially nasty as being infected with Black Breath will drain
+    experience permanently instead of temporarily.
+
+Stat drain
+    This type of drain will lower your atttributes, which can be:
+    STR (strength), INT (intelligence), WIS (wisdom), DEX (dexterity),
+    CON (constitution) and CHR (charisma).
+    While drained, these will be displayed in yellow colour instead of light
+    green on your character sheet (SHIFT+C) and in your 'XP' bar on the main
+    screen.
+    The game remembers your original stats though and you can restore any stat
+    by purchasing a potion of 'Restore <stat name>' from the alchemist in town
+    or by corresponding restoration magic of various sorts.
+
+    Note however that there are three tiers of stat drain:
+    I:   Temporary drain. Low-level traps will often do this. Also this might
+         happen to your strength stat if you overexert yourself at swimming.
+         You can just sit it out and after some time it will automatically
+         restore itself back to normal (colour changes from yellow to light
+         green again accordingly).
+    II:  Persistent drain. Medium level traps, monster attacks and certain
+         elemental damage you suffer can cause this.
+         Again the drained stat will be displayed in yellow, but unlike tier I
+         drain it will not self-restore. Instead you will need to purchase
+         a potion from the alchemist or use other means of restoration magic.
+    III: Permanent drain. High level traps are the only way to suffer this.
+         Your stat will actually not turn yellow, but remain light green and
+         its reduction cannot be undone by restoration magic!
+         The only way to counter this is by finding stat potions. These in turn
+         permanently increase a stat. So high-level characters might want to
+         always keep some of those potions in reserve even if they already
+         maxed out a stat.
+
+    It is especially nasty when your primary stats are drained. For a melee
+    fighter these are usually STR and DEX, as these determine your attack speed
+    aka BpR (blows per round). If you suffer stat drain here and notice that
+    your BpR just dropped for example from 3 to 2, it means you just lost
+    33% of your attack power! So you might want to return to town immediately
+    to restore the affected stats.
+    For a magic user it might be INT or WIS, depending on the type of magic
+    they use. If these get drained it will not only reduce their mana pool
+    (MP) but also increase the fail rates of their spells, so again you might
+    want to restore your primary stats as soon as possible.
+    Note that WIS drain can under certain circumstances be especially nasty as
+    WIS is the stat that mostly determines your sanity pool. So if you are
+    planning to fight a monster that can drain your sanity, make sure your WIS
+    stat is fully restored before you engage.
+
+    Notes:
+    - 'Sustenance' powers will help to prevent all three tiers of stat drain!
+    - Drinking a stat potion will automatically restore your stat if it was
+      drained, before permanently increasing it. So you don't need to purchase
+      an extra restoration potion before drinking a stat potion.
+    - If you are infected with Black Breath, it can also drain your stats
+      randomly (yellow aka tier II kind of drain).
+    - While items cannot drain stats in general, there is one single exception:
+      If an item possesses the 'TY_CURSE', a special, strong curse (see (5.14))
+      this curse can cause a tier II drain (aka yellow stat colour).
+
+Sanity drain
+    The most dangerous drain effect of all.
+    Some traps can cause this, drinking too much booze might also do its share
+    but mostly it will be from monster attacks, which can be ranged psychic
+    attacks as well as certain melee attacks.
+    If your sanity (see 'SN' indicator in the main window) gets drained too far
+    you will start hallucinating and if it reaches zero you will turn into an
+    unthinking vegetable, effectively erasing your character even if it is
+    'everlasting' mode and without any way of resurrecting!
+    So never let your character run out of sanity or it will die permanently!
+
+    Fortunately there are potions (and certain curing magic) to restore sanity,
+    albeit they cannot be purchased in normal stores.
+    See (6.6) for more information about sanity.
 
 
 
@@ -9631,7 +9786,8 @@ LUCK ('It affects your luck.')
         is by your personal ooc luck I guess :-p).
         'Great' means that an item has ego powers or is an artifact. Luck does
         not affect how great its ego power or artifact abilities will be!
-        Note: Luck has NO effect on 'acquirement' and 'artifact creation'.
+        Note: Luck has NO effect on 'acquirement', 'artifact creation' or on
+        items you obtain from chests.
         Note: Luck does NOT affect which base item type drops, ie whether it is
         a dragon scale mail or a cloth hat.
 NO_MAGIC ('Anti-magic shell')
@@ -10048,8 +10204,8 @@ Deeds           Some of the parchments are deeds, which are used as rewards
                 It will also fail on dungeon floors that do not allow
                 *destruction* magic explicitely (orange floor feeling saying
                 "The walls here seem very solid.", also see (4.8)).
-                (You do not get experience, loot or credit for monsters erased
-                by *destruction*, same as for genocide-type spells.)
+                (*Destruction* does not yield any kind of credit such as
+                experience points, loot or monster-form for mimics.)
 Enchant
   Sub-types: weapon to-dam, weapon to-hit, armour.
                 Will attempt to enchant weapon/ammunition or armour.
@@ -10082,7 +10238,8 @@ Genocide        Removes all monsters of a certain kind from the current level.
                 Monsters have a chance to resist genocide, depending on their
                 level. Monsters inside vaults, Uniques, and monsters that are
                 immune to teleportation attacks cannot be genocided.
-                (Genocide-type spells do not yield experience or loot.)
+                (Genocide-type spells do not yield any kind of credit such as
+                experience points, loot or monster-form for mimics.)
 Golem Creation  Allows you to create a golem which follows you and which you
                 can control to some extent, see (8.3) for more information.
 Life            Resurrects another player's ghost if standing on a directly
@@ -10111,7 +10268,8 @@ Obliteration    Removes all monsters that are close to you.
                 Monsters have a chance to resist genocide, depending on their
                 level. Monsters inside vaults, Uniques, and monsters that are
                 immune to teleportation attacks cannot be genocided.
-                (Genocide-type spells do not yield experience or loot.)
+                (Genocide-type spells do not yield any kind of credit such as
+                experience points, loot or monster-form for mimics.)
 Parchments      These contain informations about the game, they won't
                 disappear if you read them.
 Protection from evil    Repels evil creatures that try to attack you in melee.
@@ -10169,11 +10327,8 @@ Drain Life      Wand/rod: Drains 10..20% life from your target, giving you 25%
                 can resist. The damage drained caps at 900.
 Enlightenment   Magically maps your surroundings.
 Genocide        See 'Scrolls'.
-Havoc           Fires balls or beams of random type, the exact outcome is hard
-                to tell.. it's very powerful though. Beams may be fired either
-                at your target or in all directions, balls might be fired
-                either on your own position, at your target, or in all
-                directions.
+Havoc           Fires a strong initial havoc ball that leaves a lingering
+                havoc cloud behind, dealing additional damage over time.
 Healing         Staves:
                 Heals 250 to 400 hit points, depending on magic device skill,
                 cures stun and cuts.
@@ -10599,7 +10754,15 @@ Grond and Morgoth's crown do not time out.
 Artifacts that can only be found by winners (kings/queens/emperors/empresses)
 have twice the timeout delay (10 weeks).
 
-All artifact timeout delays are further doubled on the Ironman server (5 weeks
+If a character who is carrying true artifacts wins the game, ie beats Morgoth,
+all the true artifacts he is already carrying will from now on time out at
+double speed.
+
+Characters that are inside the Ironman Deep Dive Challenge dungeon will always
+have all their true artifacts time out at double speed. (This is not cumulative
+with the doubling from 'winner' status mentioned above.)
+
+All artifact timeout delays are actually doubled on the Ironman server (5 weeks
 for regular true artifacts, 20 weeks for winners-only true artifacts).
 
 The Ring of Phasing has no timeout (!) but will instead immediately reset when
@@ -10989,6 +11152,9 @@ For details about parrying and blocking see (6.11).
 
 Armour class:
 -------------
+First off: Armour class does not help against ranged attacks or spells, only
+against melee attacks (hits, kicks, etc)!
+
 Armour class helps you twice:
 -It makes monsters miss you more often with attacks that don't bypass armour.
  The more AC the better, it's weighed against the level of the attacking
@@ -12554,6 +12720,11 @@ Note that not every skill is available to every profession (class).
                                 Traumaturgy has no effect on undead and
                                 nonliving (constructs) monsters.
 
+                                Traumaturgy has insanity-reducing synergy when
+                                trained together with Hereticism. It also can
+                                prolong the 'Boundless Rage' spell. See (6.8)
+                                for details.
+
                                 A natural vampire race character who has both
                                 Necromancy and Traumaturgy at 25.000 or higher
                                 will get his intrinsic melee vampirism drain
@@ -12571,6 +12742,8 @@ Note that not every skill is available to every profession (class).
                                 receive a small bonus in their favour.
                                 It is automatically enabled when you train the
                                 skill; you can disable the aura in 'm' menu.
+                                Typing '/ex' command into chat will display the
+                                state of all your auras.
                                 Being blood magic, auras will feed from your
                                 blood. This means that the speed of your hit
                                 point regeneration will be reduced while the
@@ -12591,6 +12764,8 @@ Note that not every skill is available to every profession (class).
                                 arts will be branded by it (cold brand).
                                 It is automatically enabled when you train the
                                 skill; you can disable the aura in 'm' menu.
+                                Typing '/ex' command into chat will display the
+                                state of all your auras.
                                 Being blood magic, auras will feed from your
                                 blood. This means that the speed of your hit
                                 point regeneration will be reduced while the
@@ -12606,6 +12781,8 @@ Note that not every skill is available to every profession (class).
                                 or cold brand).
                                 It is automatically enabled when you train the
                                 skill; you can disable the aura in 'm' menu.
+                                Typing '/ex' command into chat will display the
+                                state of all your auras.
                                 Being blood magic, auras will feed from your
                                 blood. This means that the speed of your hit
                                 point regeneration will be reduced while the
@@ -13128,12 +13305,13 @@ Modifications for becoming 'corrupted':
   Fire, Air, Conveyance school x 1.7.
   Udun school x 2.0.
   Darkness and Nether runes x 1.7.
-  Shadow school x 2.1.
+  Shadow school x 1.7.
   All Blood Magic schools x 3.0.
 
   Paladins/priests:
    The four holy schools get completely reset, disabled and their points are
    fully refunded.
+   They gain access to Udun school from the Wizardry school array.
 
 Note: After a skill's gain ratio has been boosted as stated above, it will be
       capped against a maximum value of 2.000, which cannot be exceeded.
@@ -13806,7 +13984,7 @@ create a character!):
     suppress any sort of magic from occurring around them at high probability,
     which is dubbed 'anti-magic field'. They can further strengthen it by
     wielding a Dark Sword (see (5.9)).
-    Warriors can also choose to become monk-like fighters, by training the
+    Warriors can also choose to become weaponless fighters, by training the
     'Martial Arts' skill. This will require them to wear no armour or only very
     light armour later on.
     The warrior class is recommended for beginners because it's forgiving in
@@ -13860,6 +14038,8 @@ create a character!):
     have a fair fighting potential with blunt or blessed weapons. If a priest
     wields a blessed weapon he will get his 'Blunt-mastery' skill applied to it
     even if it's not actually a blunt-type weapon.
+    Alternatively to blunt weapons, priests can choose the way of the monk by
+    training Martial Arts instead, to fight without weapons.
     Priests can learn many spells that are helpful to their party members. They
     use mainly wisdom for their prayers, determining the amount of mana and how
     low their failure rate is.
@@ -14055,18 +14235,21 @@ create a character!):
     They have the same abilities as paladins in all regards but they are not
     able to utilize any kind of prayers and are susceptible to holy effects,
     instead they command blood magic and heretic magic of flame and chaos.
+    Unlike paladins they can actually also dual-wield two one-handed weapons at
+    once, although they will need to use light armour for this strategy to be
+    effective (see (6.2)).
     Similar to Vampires, Hell Knights can wield some heavily cursed items to
     great effect, flipping their negative boni to positive ones. (With the same
     exception as for vampires: Weapons "of nothingness" will do them no good
     either.)
-    Hell Hnights have a very high chance to resist the adverse effects of
+    Hell Knights have a very high chance to resist the adverse effects of
     encountering an eldritch horror (see (6.3) under 'Saving Throw' for details
     on those).
 
 - Ranger
     Second only to adventurers regarding versatility rangers excel at a lot of
     skills: They are able to fight well in close combat and may even dual-wield
-    two one-handed weapons at once which requires light armour to be efficient.
+    two one-handed weapons at once which requires light armour to be effective.
     This goes well with magic or archery which also would suffer from heavy
     armour.
     Devoted to nature in a similar way as druids rangers will avoid corrupted
@@ -15808,7 +15991,7 @@ school.
     Elemental Shield
                     Temporary resistance to heat and cold.     (auto-project)
                     Required skill level for first spell level: 15.
-                    Shared spell (see above): Fire, Water.
+                    Shared spell (see above): Fire, Water. (NOT Air!)
 
                     Tier II: Level 20.                         (auto-project)
                     Temporary resistance to heat, cold, lightning and acid.
@@ -15847,14 +16030,11 @@ school.
     Elemental Shield
                     Temporary resistance to heat and cold.     (auto-project)
                     Required skill level for first spell level: 15.
-                    Shared spell (see above): Fire, Water.
+                    Shared spell (see above): Fire, Water. (NOT Earth!)
 
                     Tier II: Level 20.                         (auto-project)
                     Temporary resistance to heat, cold, lightning and acid.
                     Shared spell (see above): Fire, Water, Earth, Air.
-
-    Stone Prison    Creates a prison of granite walls around you.
-                    Required skill level for first spell level: 25.
 
     Strike          Creates a force bolt that may stun enemies.
                     Required skill level for first spell level: 25.
@@ -15862,8 +16042,11 @@ school.
                     Tier III: Level 37.
                     It's a small ball instead of a bolt.
 
+    Stone Prison    Creates a prison of granite walls around you.
+                    Required skill level for first spell level: 33.
+
     Shake           Creates a local earthquake.
-                    Required skill level for first spell level: 35.
+                    Required skill level for first spell level: 37.
 
     BONI:           Shard resistance at 40,
                     Great damage reduction against earthquakes at 50.
@@ -16048,11 +16231,7 @@ school.
                     please see (5.9) scroll of geno/oblit.
                     (This spell uses WISDOM to determine fail-rates!
                     Genocide-type spells do not yield experience or loot.)
-                    Required skill level for first spell level: 25.
-
-    Wraithform      Temporarily turns your form immaterial.
-                    Required skill level for first spell level: 35.
-    Stop Wraithform Turns you back to material form immediately.
+                    Required skill level for first spell level: 30.
 
     Disenchantment Beam
                     Conjures a powerful and nearly irresistible beam.
@@ -16064,6 +16243,10 @@ school.
                     (This spell uses WISDOM to determine fail-rates!
                     Genocide-type spells do not yield experience or loot.)
                     Required skill level for first spell level: 40.
+
+    Wraithform      Temporarily turns your form immaterial.
+                    Required skill level for first spell level: 43.
+    Stop Wraithform Turns you back to material form immediately.
 
     BONI:           Hold life at 40.
 
@@ -16194,7 +16377,7 @@ school.
                     Tier II: Level 30.
                     Also resist lightning and acid.            (auto-project)
 
-                    Tier II: Level 40.
+                    Tier III: Level 40.
                     Also resist poison.                        (auto-project)
 
     Glyph of Warding
@@ -16980,8 +17163,8 @@ though, as all other magic schools do, not the astral level.)
 
     Sphere of Destruction
                     Enlightened: Conjures up a mana storm.
-                    Corrupted: Conjures up raging inferno, which deals similar
-                               damage as rockets do.
+                    Corrupted: Conjures up raging inferno, which deals the
+                               same damage type as rockets do.
                     Required skill level for first spell level: 50.
 
     Gateway         Enlightened: Nigh-instantaneous Word of Recall for all
@@ -17727,6 +17910,9 @@ While a guild is leaderless, three restrictions apply:
 
 PvP outside of the dedicated 'PvP' character mode:
 --------------------------------------------------
+This is usually disabled in standard server settings, so you won't see these
+options in the party menu:
+
 -Specify player to attack
     Now you are hostile to that player and you will hurt each other like
     when fighting a monster (this includes auto-retaliating and targetting).
@@ -17757,7 +17943,7 @@ The guild master is the only person who can change back ownership of the guild
 hall or even sell it if the guild for example wants to migrate to a bigger
 guild hall.
 
-The appromimate guild hall location can be viewed by all guild members by
+The approximate guild hall location can be viewed by all guild members by
 pressing SHIFT+P and then choosing 'e)'.
 
 The door of a guild hall is displayed in violet colour to all eligible members.
@@ -18276,6 +18462,8 @@ Low level character (up to 15)
 + Some Scrolls of Word of Recall
 + Some Scrolls of Identify
   These will allow you to identify unknown items that you may find!
++ Archers might find rods/wands/staves of light useful to create LoS
+  (line-of-sight) opportunities for killing monsters from afar down hallways.
 
 
 Medium level character (up to 25)
@@ -19352,7 +19540,7 @@ pre-enchantment and with the highest base level. Usually you won't need to pay
 attention to this though, because the higher level items are automatically the
 better items anyway and hence you will pick them without much thinking. :-p
 
-The base Item's weight, price or rarity (not to be confused with the item's
+The base item's weight, price or rarity (not to be confused with the item's
 base level, which however only matters for armour pieces as explained above)
 do not have any influence on the randart creation process.
 
@@ -19376,11 +19564,6 @@ For example an item that provides critical strike and strength bonus might at
 first randomly obtain a +8 bonus for its critical strike mod, but then the
 strength mod will cut down the final randart bonus to a +5, because items
 aren't allowed to give more than +5 to any character stat (str, int, etc).
-
-Similarly, stealth is limited to +5 on most items except for cloaks, so you
-cannot get Witan Boots that give more than +5 to speed, since they also always
-modify stealth (because the base item type modifies stealth), and stealth is
-capped at +5. (Exception: If they get aggravation flag.)
 
 On boots, +speed mod takes precedence over most other limiting mods, which
 means that speed-limiting mods will be erased from the boots in most cases if
@@ -19584,8 +19767,8 @@ Certain power limits are applied on items, depending on mod-combinations or the
 item's base type.
 
 Items cannot give more than +11 to speed, crit or mana.
-Items that give two of speed, crit or mana cannot give more than +7.
-Items that give speed, crit and mana cannot give more than +5.
+Items that give two of speed, crit or mana cannot give more than +6.
+Items that give speed, crit and mana cannot give more than +4.
 Items that give +speed via base-item enforced mod (eg Rings of Speed) cannot
  get more than +7 speed (which is already *extremely* rare).
 Items cannot give more than +6 luck.
@@ -19615,7 +19798,7 @@ Shields cannot gain +speed mod.
 Boomerangs cannot gain +speed mod.
 
 +Hit points mod (LIFE) caps at +3 and can only spawn on..
- melee weapons (caps at +2 if the weapon can be dual-wielded),
+ melee weapons (caps at +1 if the weapon can be dual-wielded, +2 on 1.5h/2h),
  hats, gloves and body armour.
 
 
@@ -20708,5 +20891,16 @@ SOLUTION:   If you're on Windows and using a game version greater than 4.6.1a,
             installation, but this is the normal location in almost all cases.
             (The reason the game does this is that Windows starting at version
             7 will severly limit access to the Program Files folder.)
+
+PROBLEM 55: On a fresh TomeNET installation on Linux, the game will fail to
+            start, giving a font-not-found error (usually about font '9x15'),
+            like this: "Font not found: 9x15".
+SOLUTION:   TomeNET uses basic linux system fonts (and allows you to switch to
+            fonts of your own choice instead, if you want to). Some Linux
+            distributions do not have these installed by default though, for
+            example Antergos.
+            Install the necessary fonts packages on your system, using the
+            system's package manager. It should usually be 'xorg-fonts-misc'.
+            After installation, reboot your system to ensure they work.
 
 ==============================================================================
